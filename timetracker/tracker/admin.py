@@ -5,6 +5,25 @@ class WorkEntryInline(admin.StackedInline):
 	model = WorkEntry
 	extra = 0
 
-admin.site.register(Customer)
-admin.site.register(Project)
-admin.site.register(WorkEntry)
+class UserAdmin(admin.ModelAdmin):
+	list_display = ('username', 'first_name', 'last_name', 'email',)
+	search_fields = ('username', 'first_name', 'last_name', 'email',)
+	inlines = [
+    	WorkEntryInline
+    ]
+
+class CustomerAdmin(admin.ModelAdmin):
+	list_display = ('company', 'phone1', 'email1', 'website',)
+	search_fields = ('company', 'website',)
+	list_filter = ('state',)
+
+class ProjectAdmin(admin.ModelAdmin):
+	list_display = ('title', 'customer', 'totalTime',)
+	search_fields = ('title', 'customer',)
+	list_filter = ('customer',)
+
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Project, ProjectAdmin)
