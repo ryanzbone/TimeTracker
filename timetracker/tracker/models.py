@@ -21,6 +21,10 @@ class Customer(models.Model):
 	def __unicode__(self):
 		return self.company
 
+	class Meta:
+		ordering = ['company']
+
+
 class Project(models.Model):
 	title = models.CharField(max_length=50)
 	customer = models.ForeignKey('Customer')

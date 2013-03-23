@@ -26,9 +26,11 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('registration.backends.default.urls')),
 
     url(r'^accounts/login/$', login),
-    url(r'^accounts/logout/$', logout),
+    url(r'^accounts/logout/$', logout, {'next_page':'/'}, name='auth_logout'),
 
-    url(r'^$', index),
+    url(r'^$', index, name='timetracker_index'),
+    url(r'^form/add/(?P<formType>[^/]+)/$', add_form, name='add_form'),
+
 )
 
 
