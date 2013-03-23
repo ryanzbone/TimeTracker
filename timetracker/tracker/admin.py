@@ -20,7 +20,6 @@ class CustomerAdmin(admin.ModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
 	list_display = ('title', 'customer', 'totalTime',)
 	search_fields = ('title', 'customer',)
-	list_filter = ('customer',)
 
 
 admin.site.unregister(User)

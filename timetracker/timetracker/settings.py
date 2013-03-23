@@ -21,6 +21,16 @@ DATABASES = {
     }
 }
 
+# Email Settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ryanzbone@gmail.com'
+EMAIL_HOST_PASSWORD = 'whyhello'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Gives one week to register before account goes inactive
+ACCOUNT_ACTIVATION_DAYS = 7 
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -105,6 +115,7 @@ WSGI_APPLICATION = 'timetracker.wsgi.application'
 
 TEMPLATE_DIRS = (
     'templates'
+    # 'templates/registration'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -123,6 +134,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'south',
     'tracker',
+    'registration',
 )
 
 # A sample logging configuration. The only tangible logging
