@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content%}
+
+<h1>Billing</h1>
+
+<h3>Pick a customer to view billing information</h3>
+
+<ul>
+{% for entry in workEntries %}
+<li><a href="{%url 'customer_billing' entry.customer %}">{{ entry.customer }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

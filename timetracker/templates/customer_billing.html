@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content%}
+
+<h1>Billing</h1>
+<h2>{{ theCustomer }}</h2>
+<h3>Employee: {{ user.first_name }} {{ user.last_name }}
+{% for entry in workEntries %}
+	<h4>Project: {{ entry.project }}</h4>
+	<h5>Task: {{ entry.task }}</h5>
+	<p>Notes: {{ entry.notes }}</p>
+	<p>Total Time: {{ entry.totalTime }}</p>
+	<h5>Time Worked</h5>
+	<ul>
+	{% for duration in entry.workduration_set.all %}
+		<li>{{ duration.start }} to {{ duration.end }}</li>
+	{% endfor %}
+	</ul>
+{% endfor %}
+{% endblock %}
