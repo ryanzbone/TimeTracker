@@ -38,15 +38,27 @@ class WorkEntry(models.Model):
 	customer = models.ForeignKey('Customer')
 	project = models.ForeignKey('Project')
 	totalTime = models.FloatField(default=0)
-	task = models.CharField(max_length=100, blank=True)
+	task = models.CharField(max_length=100)
 	notes = models.TextField(blank=True)
+	isRunning = models.BooleanField(default=False)
+	lastWorkedDate = models.DateField(blank = True, null=True)
 
 	def __unicode__(self):
 		return u'%s (%s)' %(self.task, self.project)
+
+	class Meta:
+		ordering = ['-isRunning']
+
 
 class WorkDuration(models.Model):
 	start = models.DateTimeField()
 	end = models.DateTimeField(blank=True, null=True)
 	user = models.ForeignKey(User)
 	workEntry = models.ForeignKey('WorkEntry')
+	isCurrent = models.BooleanField(default=False)
 
+	def duration(self):
+		return timedelta
+
+	class Meta:
+		ordering = ['-start']

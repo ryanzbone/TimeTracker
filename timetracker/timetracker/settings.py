@@ -34,9 +34,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_URL = '/accounts/login/'
 
 # Redirects to index on login
-LOGIN_REDIRECT_URL = '/'
-
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/today'
 
 
 # Local time zone for this installation. Choices can be found here:

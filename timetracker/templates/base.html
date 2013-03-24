@@ -31,12 +31,13 @@
     <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <a class="brand" href="{% url 'timetracker_index' %}">Time Tracker</a>
+                <a class="brand" href="{% url 'today' %}">Time Tracker</a>
                 <ul class="nav">
                     <li><a href="{% url 'add_form' 'work' %}">New Work Entry</a></li>
                     <li><a href="{% url 'add_form' 'customer' %}">Add Customer</a></li>
                     <li><a href="{% url 'add_form' 'project' %}">Add Project</a></li>
-                    <li><a href="{% url 'billing' %}">Billing Reports</a></li>
+                    <li><a href="{% url 'all_entries' %}">All Entries</a></li>
+                    <li><a href="#">Billing Reports</a></li>
                     <li class="pull-right"><a href="{% url 'auth_logout' %}">Logout</a></li>
                 </ul>
             </div>

@@ -52,20 +52,46 @@
 	</div>
 	<div class="span9">
 		{% for entry in workEntries %}
-		<div class="well well-small">
-			<div class="row-fluid">
-				<div class="span8">
-					<h5>{{ entry.task }} ({{ entry.project}})</h5>
-					{% if entry.notes %}{{entry.notes}}{% endif %}
-				</div>
-				<div class="span1"><h5>Time</h5></div>
-				<div class="span3">
-					<br/>
-					<button class="btn btn-success" type="button">Start</button>
+
+			{% if entry.isRunning %}
+				<div class="hero-unit">
+					<h2>{{ entry.task }} - {{ entry.project}}<small> {{ entry.customer }}</small></h2>
+					<h4>Total Time: {{entry.totalTime }}</h4>
+					<p>{{ entry.notes }}</p>
+					<ul>
+					{% for duration in entry.workduration_set.all|slice:"3" %}
+						<li>{{ duration.start }} to {{ duration.end }}</li>
+					{% endfor %}
+					</u>
+					<a href="{% url 'stop_task' entry.id %}" class="btn btn-danger" type="button">Stop</a>
 					<button class="btn" type="button">Edit</button>
 				</div>
-			</div>
-		</div>
+			{% else %}
+
+				<div class="well well-small">
+					<div class="row-fluid">
+						<div class="span8">
+							<h5>{{ entry.task }} ({{ entry.project}})</h5>
+							{% if entry.notes %}{{entry.notes}}{% endif %}
+							<ul>
+								{% for duration in entry.workduration_set.all %}
+								<li>{{ duration.start }}{% if duration.end %} to {{ duration.end }}{% endif %}</li>
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="span1"><h5>Time</h5>{{ entry.totalTime }} hours</div>
+						<div class="span3">
+							<br/>
+							{% if entry.isRunning %}
+							<a href="{% url 'stop_task' entry.id %}" class="btn btn-danger" type="button">Stop</a>
+							{% else %}
+							<a href="{% url 'start_task' entry.id %}" class="btn btn-success" type="button">Start</a>
+							{% endif %}
+							<button class="btn" type="button">Edit</button>
+						</div>
+					</div>
+				</div>
+			{% endif %}
 		{% endfor %}
 	</div>
 </div>
