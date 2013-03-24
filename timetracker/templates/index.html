@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Project Tracker - Index{% endblock %}
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery-ui-1.10.2.custom.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-timepicker-addon.js"></script>
+<link href="{{ STATIC_URL }}css/jquery-ui-1.10.2.custom.css" rel="stylesheet" media="screen">
+
+<script>
+	$(document).ready(function() {
+		$( "#id_beginDateTime" ).datetimepicker();
+		$( "#id_endDateTime" ).datetimepicker();
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+	<div class="span9">
+		<h2>{% now "l, F d" %}</h2>
+	</div>
+	<div class="span3">
+		<div class="pagination pull-right">
+		  <ul>
+		    <li><a href="#"><i class="icon-double-angle-left"></i></a></li>
+		    <li class="disabled"><a href="#">Today</a></li>
+		    <li><a href="#"><i class="icon-double-angle-right"></a></i></li>
+		</ul>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span3">
+		<h4>Today's Total:</h4>
+		<p>Some amount of hours</p>
+		<br/>
+
+		<!-- Modal -->
+		<div id="newEntry" class="modal hide fade in" style="display: none;">
+			<form class="modal-form" action="" method="post">
+				{% csrf_token %}
+				<div class="modal-header"><a class="close" data-dismiss="modal">×</a><h3>Add new work entry</h3></div>
+				<div class="modal-body">{{ form.as_table }}</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+   					<button type="submit" value="Submit" class="btn btn-primary">Submit</button>
+   				</div>
+   			</form>
+   		</div>
+		<button class="btn btn-primary" data-toggle="modal" data-target="#newEntry">New Entry</a>
+
+	</div>
+	<div class="span9">
+		{% for entry in workEntries %}
+		<div class="well well-small">
+			<div class="row-fluid">
+				<div class="span8">
+					<h5>{{ entry.task }} ({{ entry.project}})</h5>
+					{% if entry.notes %}{{entry.notes}}{% endif %}
+				</div>
+				<div class="span1"><h5>Time</h5></div>
+				<div class="span3">
+					<br/>
+					<button class="btn btn-success" type="button">Start</button>
+					<button class="btn" type="button">Edit</button>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

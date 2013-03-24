@@ -1,6 +1,10 @@
 from django.contrib import admin
 from models import *
 
+class WorkDurationInline(admin.StackedInline):
+	model = WorkDuration 
+	extra = 0
+
 class WorkEntryInline(admin.StackedInline):
 	model = WorkEntry
 	extra = 0
@@ -9,7 +13,7 @@ class UserAdmin(admin.ModelAdmin):
 	list_display = ('username', 'first_name', 'last_name', 'email',)
 	search_fields = ('username', 'first_name', 'last_name', 'email',)
 	inlines = [
-    	WorkEntryInline
+    	WorkEntryInline, WorkDurationInline
     ]
 
 class CustomerAdmin(admin.ModelAdmin):

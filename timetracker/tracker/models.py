@@ -28,7 +28,7 @@ class Customer(models.Model):
 class Project(models.Model):
 	title = models.CharField(max_length=50)
 	customer = models.ForeignKey('Customer')
-	totalTime = models.FloatField(blank=True)
+	totalTime = models.FloatField(default=0)
 
 	def __unicode__(self):
 		return self.title
@@ -36,8 +36,17 @@ class Project(models.Model):
 class WorkEntry(models.Model):
 	user = models.ForeignKey(User)
 	customer = models.ForeignKey('Customer')
-	project = models.OneToOneField('Project')
-	beginDateTime = models.DateTimeField()
-	endDateTime = models.DateTimeField(blank=True, null=True)
-	totalTime = models.FloatField(blank=True)
-	task = models.TextField(blank=True)
+	project = models.ForeignKey('Project')
+	totalTime = models.FloatField(default=0)
+	task = models.CharField(max_length=100, blank=True)
+	notes = models.TextField(blank=True)
+
+	def __unicode__(self):
+		return u'%s (%s)' %(self.task, self.project)
+
+class WorkDuration(models.Model):
+	start = models.DateTimeField()
+	end = models.DateTimeField(blank=True, null=True)
+	user = models.ForeignKey(User)
+	workEntry = models.ForeignKey('WorkEntry')
+

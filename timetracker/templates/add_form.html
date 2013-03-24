@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Add a {{ formType|capfirst }}{% if formType == 'work' %} Entry {% endif %} {% endblock %}
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery-ui-1.10.2.custom.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-timepicker-addon.js"></script>
+<link href="{{ STATIC_URL }}css/jquery-ui-1.10.2.custom.css" rel="stylesheet" media="screen">
+
+<script>
+	$(document).ready(function() {
+		$( "#id_beginDateTime" ).datetimepicker();
+		$( "#id_endDateTime" ).datetimepicker();
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+	<div class="page-header">
+    	<h1>Add a {{ formType|capfirst }}{% if formType == 'work' %} Entry{% endif %} </h1>
+	</div>
+	<form action="" method="post">
+		{% csrf_token %}
+		<table>
+			{{ form.as_table }}
+		</table>
+		<input type="submit" value="Submit">
+	</form>
+	
+{% endblock %}

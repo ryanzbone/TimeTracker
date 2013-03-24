@@ -29,7 +29,10 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', logout, {'next_page':'/'}, name='auth_logout'),
 
     url(r'^$', index, name='timetracker_index'),
+    # url(r'^billing/$', billing, name='billing'),
+    # url(r'^billing/(?P<customer>[^/]+)/$', customer_billing, name='customer_billing'),
     url(r'^form/add/(?P<formType>[^/]+)/$', add_form, name='add_form'),
+
 
 )
 

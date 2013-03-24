@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Project Tracker - Login{% endblock %}
+
+{%block content%}
+<div class="hero-unit">
+	<h1>Login to Project Tracker!</h1>
+	<br/>
+
+	<form class="form-horizontal" action="" method="post">
+		{% csrf_token %}
+	  <div class="control-group">
+	    <label class="control-label" for="username">Username</label>
+	    <div class="controls">
+	      <input type="text" name="username" value="" id="username" placeholder="Username">
+	    </div>
+	  </div>
+	  <div class="control-group">
+	    <label class="control-label" for="password">Password</label>
+	    <div class="controls">
+	      <input type="password" name="password" id="password"  value="" placeholder="Password">
+	    </div>
+	  </div>
+	  <div class="control-group">
+	    <div class="controls">
+	      <button type="submit" value="Sign In"class="btn">Sign in</button>
+	    </div>
+	  </div>
+	</form>
+	<p>Don't have an account? <a href="/accounts/register">Create one here</a></p>
+</div>
+{% endblock %}

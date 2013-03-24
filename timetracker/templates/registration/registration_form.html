@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Project Tracker - Registration{% endblock %}
+
+{%block content%}
+    <div class="container page-content">                       
+        <div class="row">
+			<div class="hero-unit">
+				<h1>User Registration</h1>
+				<br/>
+				<form action="" method="post">
+					{% csrf_token %}
+					{{ form.as_p }}
+					<input type="submit" value="Submit" class="btn btn-primary">
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

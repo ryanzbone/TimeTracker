@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Time Tracker">
+    <meta name="author" content="Ryan Bone">
+	
+    {% load staticfiles %}
+        <script src="{{ STATIC_URL }}js/jquery-1.9.1.js"></script>
+
+    <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="{{ STATIC_URL }}css/font-awesome.css" rel="stylesheet" media="screen">
+
+    <style type="text/css">
+    .page-content {padding:40px;}
+    </style>
+
+    <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet">
+
+	{% block head %}{% endblock %}
+</head>
+
+<body>
+
+    {% if user.is_authenticated %}
+    <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="brand" href="{% url 'timetracker_index' %}">Time Tracker</a>
+                <ul class="nav">
+                    <li><a href="{% url 'add_form' 'work' %}">New Work Entry</a></li>
+                    <li><a href="{% url 'add_form' 'customer' %}">Add Customer</a></li>
+                    <li><a href="{% url 'add_form' 'project' %}">Add Project</a></li>
+                    <li><a href="{% url 'billing' %}">Billing Reports</a></li>
+                    <li class="pull-right"><a href="{% url 'auth_logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container-fluid page-content">                       
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

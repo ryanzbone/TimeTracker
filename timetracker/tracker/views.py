@@ -1,7 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout
+from datetime import date
 
 
 from tracker.models import WorkEntry
@@ -10,16 +12,27 @@ from django.contrib.auth.models import User
 
 @login_required
 def index(request):
-	workEntries = WorkEntry.objects.filter(user=User)
-	user = User
+	today = date.today()
+	workEntries = WorkEntry.objects.filter(user=request.user)
+	user = request.user
+
+	exp = WorkEntry(user=request.user)
+	if request.method == 'POST':
+		form = WorkEntryForm(request.POST,instance=exp)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/')
+	else:
+		form = WorkEntryForm(instance=exp)
+
 	return render(request, 'index.html', locals())
 
 @login_required
 def add_form(request, formType):
 	if formType == 'work':
-		exp = WorkEntry( )
+		exp = WorkEntry(user=request.user)
 		if request.method == 'POST':
-			form = WorkEntryForm(request.POST,instance=exp )
+			form = WorkEntryForm(request.POST,instance=exp)
 			if form.is_valid():
 				form.save()
 				return HttpResponseRedirect('/')
@@ -46,3 +59,14 @@ def add_form(request, formType):
 	else:
 		raise Http404
 	return render(request, 'add_form.html', locals())
+
+# @login_required
+# def billing(request):
+	
+
+
+# @login_required
+# def customer_billing(request, customer):
+	
+
+
