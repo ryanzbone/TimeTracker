@@ -4,8 +4,8 @@
 
 <h2>Select work to export</h2>
 <ul>
-	{% for entry in workEntries %}
-	<li><a href="{% url 'export_csv' entry.id %}">{{ entry }}</a></li>
+	{% for customer in customers %}
+	<li><a href="{% url 'export_csv' customer.id %}">{{ customer }}</a></li>
 	{% endfor %}
 </ul>
 

@@ -19,8 +19,10 @@
 {% block content %}
 <div class="row-fluid">
 	<div class="span9">
-		<!-- Date display -->
-		<h2>{% if theDate %}{{ theDate|date:"l, N d" }}{% else %}{{ today|date:"l, N d" }}{% endif %}</h2>
+		<!-- Title display -->
+		<h2>{% if allEntries %}All Entries
+			{% elif theDate %}Entries For {{ theDate|date:"l, N d" }}
+			{% else %}Entries For {{ today|date:"l, N d" }}{% endif %}</h2>
 
 	</div>
 	<div class="span3">
@@ -39,7 +41,7 @@
 <div class="row-fluid">
 	<div class="span3">
 		<!-- Total time worked -->
-		<h4>{% if allEntries %}Grand {% else %}Today's {% endif %}Total:</h4>
+		<h4>{% if allEntries %}Grand {% else %}The Day's {% endif %}Total:</h4>
 		<p>{% if time.total > 0 %}{{ time.total }}{% else %}0{% endif %} hours</p>
 		<br/>
 
@@ -104,7 +106,7 @@
 </div>
 <script>
 	$(function() {
-    	$( "#id_lastWorkedDate" ).datepicker();
+    	$( "#id_lastWorkedDate" ).datetimepicker();
   	});
 	</script>
 {% endblock %}

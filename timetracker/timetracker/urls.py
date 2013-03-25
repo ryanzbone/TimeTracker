@@ -39,7 +39,7 @@ urlpatterns = patterns('',
 
     # CSV selection, export
     url(r'^csv/choose/$', choose_csv, name='choose_csv'),
-    url(r'^csv/export/(?P<entryId>\d+)/$', export_csv, name='export_csv'),
+    url(r'^csv/export/(?P<customerId>\d+)/$', export_csv, name='export_csv'),
 
     # Used for chained-selects in Add/Update forms
     url(r'^chaining/', include('smart_selects.urls')),

@@ -25,11 +25,10 @@ class Customer(models.Model):
 	class Meta:
 		ordering = ['company']
 
-
 class Project(models.Model):
 	title = models.CharField(max_length=50)
 	customer = models.ForeignKey('Customer')
-	totalTime = models.FloatField('total time', default=0)
+	totalTime = models.FloatField('total time in hours', default=0)
 
 	def __unicode__(self):
 		return self.title
@@ -37,7 +36,6 @@ class Project(models.Model):
 class WorkEntry(models.Model):
 	user = models.ForeignKey(User)
 	customer = models.ForeignKey('Customer')
-	# project = models.ForeignKey('Project')
 	project = ChainedForeignKey(
 		Project,
 		chained_field="customer",
@@ -45,11 +43,11 @@ class WorkEntry(models.Model):
 		show_all=False,
 		auto_choose=True
 	)
-	totalTime = models.FloatField('total time', default=0)
+	totalTime = models.FloatField('total time in hours', default=0)
 	task = models.CharField(max_length=100)
 	notes = models.TextField(blank=True)
 	isRunning = models.BooleanField('is current project', default=False)
-	lastWorkedDate = models.DateField('last worked date', blank = True, null=True)
+	lastWorkedDate = models.DateTimeField('last worked date', blank = True, null=True)
 
 	def __unicode__(self):
 		return u'%s (%s)' %(self.task, self.project)
