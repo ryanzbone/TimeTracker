@@ -14,7 +14,7 @@ class ProjectForm(forms.ModelForm):
 class WorkEntryForm(forms.ModelForm):
 	class Meta:
 		model = WorkEntry
-		exclude = ('user')
+		exclude = ('user',)
 		# widgets = {
 		# 	'customer': 
 		# }

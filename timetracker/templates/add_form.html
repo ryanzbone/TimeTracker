@@ -15,7 +15,9 @@
 
 {% block content %}
 	<div class="page-header">
-    	<h1>Add a {{ formType|capfirst }}{% if formType == 'work' %} Entry{% endif %} </h1>
+		{% if entryId %}<h1>Update a Work Entry</h1>
+		{% else %}<h1>Add a {{ formType|capfirst }}{% if formType == 'work' %} Entry{% endif %} </h1>
+		{% endif %}
 	</div>
 	<form action="" method="post">
 		{% csrf_token %}

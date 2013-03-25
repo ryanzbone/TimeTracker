@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Select work to export</h2>
+<ul>
+	{% for entry in workEntries %}
+	<li><a href="{% url 'export_csv' entry.id %}">{{ entry }}</a></li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

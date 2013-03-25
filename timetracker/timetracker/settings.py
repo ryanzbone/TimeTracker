@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'south',
     'tracker',
     'registration',
+    'unicodecsv',
 )
 
 # A sample logging configuration. The only tangible logging
