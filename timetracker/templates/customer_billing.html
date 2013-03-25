@@ -2,19 +2,24 @@
 
 {% block content%}
 
-<h1>Billing</h1>
-<h2>{{ theCustomer }}</h2>
-<h3>Employee: {{ user.first_name }} {{ user.last_name }}
+<h1>Billing <small>{{ theCustomer }}</small></h1>
+<h3>Employee: {{ user.first_name }} {{ user.last_name }}</h3>
+
 {% for entry in workEntries %}
-	<h4>Project: {{ entry.project }}</h4>
-	<h5>Task: {{ entry.task }}</h5>
-	<p>Notes: {{ entry.notes }}</p>
-	<p>Total Time: {{ entry.totalTime }}</p>
-	<h5>Time Worked</h5>
-	<ul>
-	{% for duration in entry.workduration_set.all %}
-		<li>{{ duration.start }} to {{ duration.end }}</li>
-	{% endfor %}
-	</ul>
+	{% if entry.totalTime > 0 %}
+		<hr/>
+		<h4>Project: {{ entry.project }}</h4>
+		<strong><p>Task: </strong>{{ entry.task }}</p>
+		{% if entry.notes %} <p><strong>Notes:</strong> {{ entry.notes }}</p> {% endif %}
+		<p><strong>Total Time:</strong> {{ entry.totalTime }}</p>
+		{% if entry.workduration_set.count > 0 %}
+			<strong>Dates and times worked:</strong>
+			<ul>
+			{% for duration in entry.workduration_set.all %}
+				<li>{{ duration.start }}{% if duration.end %} to {{ duration.end }}{% else %} (in progress){% endif %}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+	{% endif %}
 {% endfor %}
 {% endblock %}

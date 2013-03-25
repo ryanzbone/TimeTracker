@@ -7,8 +7,8 @@
 <h3>Pick a customer to view billing information</h3>
 
 <ul>
-{% for entry in workEntries %}
-<li><a href="{%url 'customer_billing' entry.customer %}">{{ entry.customer }}</a></li>
+{% for customer in customers %}
+	<li><a href="{%url 'customer_billing' customer %}">{{ customer }}</a></li>
 {% endfor %}
 </ul>
 

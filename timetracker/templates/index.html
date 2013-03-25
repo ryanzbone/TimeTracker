@@ -11,6 +11,7 @@
 	$(document).ready(function() {
 		$( "#id_beginDateTime" ).datetimepicker();
 		$( "#id_endDateTime" ).datetimepicker();
+		$( "id_lastWorkedDate" ).datepicker();
 	});
 </script>
 {% endblock %}
@@ -19,7 +20,8 @@
 <div class="row-fluid">
 	<div class="span9">
 		<!-- Date display -->
-		<h2>{% if theDate %}{{ theDate }}{% else %}{{ today }}{% endif %}</h2>
+		<h2>{% if theDate %}{{ theDate|date:"l, N d" }}{% else %}{{ today|date:"l, N d" }}{% endif %}</h2>
+
 	</div>
 	<div class="span3">
 		<!-- Pagination for navigating days -->
@@ -27,8 +29,8 @@
 		<div class="pagination pull-right">
 		  <ul>
 		    <li><a href="{% url 'date' yesterday.year yesterday.month yesterday.day %}"><i class="icon-double-angle-left"></i></a></li>
-		    <li><a href="{% url 'today' %}">Today</a></li>
-		    <li><a href="{% if not today %}{% url 'date' tomorrow.year tomorrow.month tomorrow.day %}{% endif %}"><i class="icon-double-angle-right"></a></i></li>
+		    <li {% if today %}class="disabled"><span>Today</span>{% else %}><a href="{% url 'today' %}">Today</a>{% endif %}</li>
+		    <li {% if today %}class="disabled"><span><i class="icon-double-angle-right"></i></span>{% else %}><a href="{% if not today %}{% url 'date' tomorrow.year tomorrow.month tomorrow.day %}{% endif %}"><i class="icon-double-angle-right"></a></i>{% endif %}</li>
 		</ul>
 		{% endif %}
 	</div>
@@ -38,7 +40,7 @@
 	<div class="span3">
 		<!-- Total time worked -->
 		<h4>{% if allEntries %}Grand {% else %}Today's {% endif %}Total:</h4>
-		<p>{{ time.total }} hours</p>
+		<p>{% if time.total > 0 %}{{ time.total }}{% else %}0{% endif %} hours</p>
 		<br/>
 
 		<!-- Modal: Add New Entry-->
@@ -54,44 +56,18 @@
    			</form>
    		</div>
 		<button class="btn btn-primary" data-toggle="modal" data-target="#newEntry">New Entry</a>
-
-		<!-- Modal: Edit Entry -->
-<!-- 		<div id="edit" class="modal hide fade in" style="display: none;">
-			<form class="modal-form" action="" method="post">
-				{% csrf_token %}
-				<div class="modal-header"><a class="close" data-dismiss="modal">×</a><h3>Edit Work Entry</h3></div>
-				<div class="modal-body">{{ form.as_table }}</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-   					<button type="submit" value="Submit" class="btn btn-primary">Submit</button>
-   				</div>
-   			</form>
-   		</div> -->
-
 	</div>
 	<div class="span9">
 		{% for entry in workEntries %}
 			<!-- Highlights current work -->
 			{% if entry.isRunning %}
 				<div class="hero-unit">
-					<!-- Modal: Edit Entry -->
-			<!-- 		<div id="editHero" class="modal hide fade in" style="display: none;">
-						<form class="modal-form" action="" method="post">
-							{% csrf_token %}
-							<div class="modal-header"><a class="close" data-dismiss="modal">×</a><h3>Edit Work Entry</h3></div>
-							<div class="modal-body">{{ form2.as_table }}</div>
-							<div class="modal-footer">
-								<button type="submit" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-			   					<a href="{% url 'update_form' entry.id %}" type="submit" value="Submit" class="btn btn-primary">Update</a>
-			   				</div>
-			   			</form>
-			   		</div> -->
-					<h2>{{ entry.task }} - {{ entry.project}}<small> {{ entry.customer }}</small></h2>
+					<h2>{{ entry.project }} - {{ entry.task}}<small> {{ entry.customer }}</small></h2>
 					<h4>Total Time: {{ entry.totalTime }} hours</h4>
 					<p>{{ entry.notes }}</p>
 					<ul>
 					{% for duration in entry.workduration_set.all|slice:"3" %}
-						<li>{{ duration.start }} to {{ duration.end }}</li>
+						<li>{{ duration.start }}{% if duration.end %} to {{ duration.end }}{% else %} (in progress){% endif %}</li>
 					{% endfor %}
 					</u>
 					<a href="{% url 'stop_task' entry.id %}" class="btn btn-danger" type="button">Stop</a>
@@ -100,21 +76,9 @@
 			{% else %}
 				<!-- The rest of the user's work, either current day or all -->
 				<div class="well well-small">
-					<!-- Modal: Edit Entry -->
-					<!-- <div id="edit{{ forloop.counter }}" class="modal hide fade in" style="display: none;">
-						<form class="modal-form" action="" method="post">
-							{% csrf_token %}
-							<div class="modal-header"><a class="close" data-dismiss="modal">×</a><h3>Edit Work Entry</h3></div>
-							<div class="modal-body">{{ form2.as_table }}</div>
-							<div class="modal-footer">
-								<button type="submit" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-			   					<a href="{% url 'update_form' entry.id %}" type="submit" value="Submit" class="btn btn-primary">Update</a>
-			   				</div>
-			   			</form>
-			   		</div> -->
 					<div class="row-fluid">
 						<div class="span8">
-							<h5>{{ entry.task }} ({{ entry.project}})</h5>
+							<h5>{{ entry.project }} - {{ entry.task}} <small>{{ entry.customer }}</small></h5>
 							{% if entry.notes %}{{entry.notes}}{% endif %}
 							<ul>
 								{% for duration in entry.workduration_set.all %}
@@ -138,4 +102,9 @@
 		{% endfor %}
 	</div>
 </div>
+<script>
+	$(function() {
+    	$( "#id_lastWorkedDate" ).datepicker();
+  	});
+	</script>
 {% endblock %}

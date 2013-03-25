@@ -9,20 +9,21 @@
     <meta name="author" content="Ryan Bone">
 	
     {% load staticfiles %}
-        <script src="{{ STATIC_URL }}js/jquery-1.9.1.js"></script>
-
+    <script src="{{ STATIC_URL }}js/jquery-1.9.1.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery-ui-1.10.2.custom.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
 
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/font-awesome.css" rel="stylesheet" media="screen">
+    <link href="{{ STATIC_URL }}css/jquery-ui-1.10.2.custom.css" rel="stylesheet" media="screen">
 
     <style type="text/css">
     .page-content {padding:40px;}
     </style>
 
-    <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet">
 
-	{% block head %}{% endblock %}
+	{% block headend %}{% endblock %}
 </head>
 
 <body>
@@ -30,7 +31,7 @@
     {% if user.is_authenticated %}
     <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="navbar-inner">
-            <div class="container-fluid">
+            <div class="container">
                 <a class="brand" href="{% url 'today' %}">Time Tracker</a>
                 <ul class="nav">
                     <li><a href="{% url 'add_form' 'work' %}">New Work Entry</a></li>

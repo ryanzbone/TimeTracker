@@ -24,7 +24,7 @@ DATABASES = {
 # Email Settings
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ryanzbone@gmail.com'
-EMAIL_HOST_PASSWORD = 'whyhello'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'tracker',
     'registration',
     'unicodecsv',
+    'smart_selects',
 )
 
 # A sample logging configuration. The only tangible logging
